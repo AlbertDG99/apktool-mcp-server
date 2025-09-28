@@ -33,6 +33,7 @@ logger.addHandler(console_handler)
 parser = argparse.ArgumentParser("APKTool MCP Server")
 parser.add_argument("--http", help="Serve MCP Server over HTTP stream.", action="store_true", default=False)
 parser.add_argument("--port", help="Specify the port number for --http to serve on. (default:8652)", default=8652, type=int)
+parser.add_argument("--host", help="Specify the host/interface to bind for --http (default:127.0.0.1). Use 0.0.0.0 to listen on all interfaces.", default="127.0.0.1", type=str)
 parser.add_argument("--workspace", help="Specify workspace directory for APK projects", default="apktool_mcp_server_workspace", type=str)
 parser.add_argument("--timeout", help="Default timeout for APKTool commands in seconds", default=300, type=int)
 args = parser.parse_args()
@@ -1663,6 +1664,7 @@ def main():
     print(f"  Default Timeout: {DEFAULT_TIMEOUT}s")
     print(f"  HTTP Mode: {'Enabled' if args.http else 'Disabled'}")
     if args.http:
+        print(f"  HTTP Host: {args.host}")
         print(f"  HTTP Port: {args.port}")
     print()
     
@@ -1720,8 +1722,8 @@ def main():
     print("Starting MCP server...")
     
     if args.http:
-        print(f"Server will be available at: http://127.0.0.1:{args.port}")
-        mcp.run(transport="streamable-http", port=args.port)
+        print(f"Server will be available at: http://{args.host}:{args.port}")
+        mcp.run(transport="streamable-http", host=args.host, port=args.port)
     else:
         print("Server running in stdio mode")
         mcp.run()

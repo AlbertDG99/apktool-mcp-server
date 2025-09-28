@@ -180,6 +180,21 @@ uv pip install httpx fastmcp
 # The setup for apktool-mcp-server is done.
 ```
 
+### HTTP mode (optional)
+
+```bash
+# Default (binds to 127.0.0.1:8652)
+uv run apktool_mcp_server.py --http
+
+# Expose on all interfaces
+uv run apktool_mcp_server.py --http --host 0.0.0.0 --port 8652
+
+# Bind to a specific local IP
+uv run apktool_mcp_server.py --http --host 192.168.1.50 --port 8652
+```
+
+Note: Exposing on 0.0.0.0 makes the server reachable on your LAN. Ensure appropriate network controls.
+
 ## 2. Running on Local LLM Using Ollama and Zin MCP Client - Recommended
 
 <div align="center">
